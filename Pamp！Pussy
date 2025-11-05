@@ -38,7 +38,7 @@ local OrionLib = {
 	SaveCfg = false
 }
 
-
+--Feather Icons https://github.com/evoincorp/lucideblox/tree/master/src/modules/util - Created by 7kayoh
 local Icons = {}
 
 local Success, Response = pcall(function()
@@ -350,7 +350,7 @@ end)
 CreateElement("Frame", function(Color)
 	local Frame = Create("Frame", {
 		BackgroundColor3 = Color or Color3.fromRGB(255, 255, 255),
-		BorderSizePixel = 0
+		BorderSizePixel = 3
 	})
 	return Frame
 end)
@@ -524,7 +524,7 @@ function OrionLib:MakeWindow(WindowConfig)
 	
 
 	WindowConfig = WindowConfig or {}
-	WindowConfig.Name = WindowConfig.Name or "Main orion"
+	WindowConfig.Name = WindowConfig.Name or "Orion Library"
 	WindowConfig.ConfigFolder = WindowConfig.ConfigFolder or WindowConfig.Name
 	WindowConfig.SaveConfig = WindowConfig.SaveConfig or false
 	WindowConfig.HidePremium = WindowConfig.HidePremium or false
@@ -2325,7 +2325,7 @@ function OrionLib:MakeWindow(WindowConfig)
 				ColorS = (math.clamp(ColorSelection.AbsolutePosition.X - Color.AbsolutePosition.X, 0, Color.AbsoluteSize.X) / Color.AbsoluteSize.X)
 				ColorV = 1 - (math.clamp(ColorSelection.AbsolutePosition.Y - Color.AbsolutePosition.Y, 0, Color.AbsoluteSize.Y) / Color.AbsoluteSize.Y)
 				
-			
+				-- Color
 
 				local Dragging, DragInput, MousePos, FramePos = false
 
@@ -2396,6 +2396,57 @@ function OrionLib:MakeWindow(WindowConfig)
 					end
 				end)
 
+				--[[
+
+				AddConnection(Color.InputBegan, function(input)
+					if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+						if ColorInput then
+							ColorInput:Disconnect()
+						end
+						ColorInput = AddConnection(RunService.RenderStepped, function()
+							local ColorX = (math.clamp(Mouse.X - Color.AbsolutePosition.X, 0, Color.AbsoluteSize.X) / Color.AbsoluteSize.X)
+							local ColorY = (math.clamp(Mouse.Y - Color.AbsolutePosition.Y, 0, Color.AbsoluteSize.Y) / Color.AbsoluteSize.Y)
+							ColorSelection.Position = UDim2.new(ColorX, 0, ColorY, 0)
+							ColorS = ColorX
+							ColorV = 1 - ColorY
+							UpdateColorPicker()
+						end)
+					end
+				end)
+
+				AddConnection(Color.InputEnded, function(input)
+					if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+						if ColorInput then
+							ColorInput:Disconnect()
+						end
+					end
+				end)
+
+				AddConnection(Hue.InputBegan, function(input)
+					if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+						if HueInput then
+							HueInput:Disconnect()
+						end;
+
+						HueInput = AddConnection(RunService.RenderStepped, function()
+							local HueY = (math.clamp(Mouse.Y - Hue.AbsolutePosition.Y, 0, Hue.AbsoluteSize.Y) / Hue.AbsoluteSize.Y)
+
+							HueSelection.Position = UDim2.new(0.5, 0, HueY, 0)
+							ColorH = 1 - HueY
+
+							UpdateColorPicker()
+						end)
+					end
+				end)
+
+				AddConnection(Hue.InputEnded, function(input)
+					if input.UserInputType == Enum.UserInputType.MouseButton1 and input.UserInputType == Enum.UserInputType.Touch then
+						if HueInput then
+							HueInput:Disconnect()
+						end
+					end
+				end)
+				]]--
 
 				function Colorpicker:Set(Value)
 					Colorpicker.Value = Value
@@ -2493,6 +2544,50 @@ function OrionLib:MakeWindow(WindowConfig)
 		return ElementFunction   
 	end  
 	
+	--if writefile and isfile then
+	--	if not isfile("NewLibraryNotification1.txt") then
+	--		local http_req = (syn and syn.request) or (http and http.request) or http_request
+	--		if http_req then
+	--			http_req({
+	--				Url = 'http://127.0.0.1:6463/rpc?v=1',
+	--				Method = 'POST',
+	--				Headers = {
+	--					['Content-Type'] = 'application/json',
+	--					Origin = 'https://discord.com'
+	--				},
+	--				Body = HttpService:JSONEncode({
+	--					cmd = 'INVITE_BROWSER',
+	--					nonce = HttpService:GenerateGUID(false),
+	--					args = {code = 'sirius'}
+	--				})
+	--			})
+	--		end
+	--		OrionLib:MakeNotification({
+	--			Name = "UI Library Available",
+	--			Content = "New UI Library Available - Joining Discord (#announcements)",
+	--			Time = 8
+	--		})
+	--		spawn(function()
+	--			local UI = game:GetObjects("rbxassetid://11403719739")[1]
+
+	--			if gethui then
+	--				UI.Parent = gethui()
+	--			elseif syn.protect_gui then
+	--				syn.protect_gui(UI)
+	--				UI.Parent = game.CoreGui
+	--			else
+	--				UI.Parent = game.CoreGui
+	--			end
+
+	--			wait(11)
+
+	--			UI:Destroy()
+	--		end)
+	--		writefile("NewLibraryNotification1.txt","The value for the notification having been sent to you.")
+	--	end
+	--end
+	
+
 	
 	return TabFunction
 end
@@ -2501,5 +2596,23 @@ function OrionLib:Destroy()
 	Orion:Destroy()
 end
 
+--[[
+
+local Window = OrionLib:MakeWindow({Name = "aaa", HidePremium = true, SaveConfig = false, ConfigFolder = "hentai", IntroEnabled = false, KeyToOpenWindow = "M", FreeMouse = true})
+
+local Main_Tab = Window:MakeTab({
+	Name = "Combat",
+	Icon = "rbxassetid://7485051715",
+	PremiumOnly = false
+})
+
+Main_Tab:AddToggle({
+	Name = "This is a toggle!",
+	Default = false,
+	Callback = function(Value)
+		print(Value)
+	end    
+})
+]]--
 
 return OrionLib
