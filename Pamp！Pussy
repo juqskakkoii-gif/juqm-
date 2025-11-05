@@ -524,7 +524,7 @@ function OrionLib:MakeWindow(WindowConfig)
 	
 
 	WindowConfig = WindowConfig or {}
-	WindowConfig.Name = WindowConfig.Name or "Orion Library"
+	WindowConfig.Name = WindowConfig.Name or "Main Orion"
 	WindowConfig.ConfigFolder = WindowConfig.ConfigFolder or WindowConfig.Name
 	WindowConfig.SaveConfig = WindowConfig.SaveConfig or false
 	WindowConfig.HidePremium = WindowConfig.HidePremium or false
@@ -532,8 +532,8 @@ function OrionLib:MakeWindow(WindowConfig)
 		WindowConfig.IntroEnabled = true
 	end
 	WindowConfig.FreeMouse = WindowConfig.FreeMouse or false
-	WindowConfig.KeyToOpenWindow = WindowConfig.KeyToOpenWindow or "RightShift"
-	WindowConfig.IntroText = WindowConfig.IntroText or "Orion Library"
+	WindowConfig.KeyToOpenWindow = WindowConfig.KeyToOpenWindow or "Q"
+	WindowConfig.IntroText = WindowConfig.IntroText or "Main Orion"
 	WindowConfig.CloseCallback = WindowConfig.CloseCallback or function() end
 	WindowConfig.ShowIcon = WindowConfig.ShowIcon or false
 	WindowConfig.Icon = WindowConfig.Icon or "rbxassetid://8834748103"
@@ -600,7 +600,7 @@ function OrionLib:MakeWindow(WindowConfig)
 	}), {
 		AddThemeObject(SetProps(MakeElement("Image", "rbxassetid://7072719338"), {
 			Position = UDim2.new(0, 9, 0, 6),
-			Size = UDim2.new(0, 18, 0, 18),
+			Size = UDim2.new(0, 50, 0, 50),
 			Name = "Ico"
 		}), "Text")
 	})
