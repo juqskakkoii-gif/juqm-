@@ -1,3 +1,4 @@
+
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
@@ -332,9 +333,9 @@ end)
 
 CreateElement("Padding", function(Bottom, Left, Right, Top)
 	local Padding = Create("UIPadding", {
-		PaddingBottom = UDim.new(0, Bottom or 4),
-		PaddingLeft = UDim.new(0, Left or 4),
-		PaddingRight = UDim.new(0, Right or 4),
+		PaddingBottom = UDim.new(0, Bottom or 20),
+		PaddingLeft = UDim.new(0, Left or 41),
+		PaddingRight = UDim.new(0, Right or 14),
 		PaddingTop = UDim.new(0, Top or 4)
 	})
 	return Padding
